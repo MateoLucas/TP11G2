@@ -5,9 +5,10 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 #include "port.h"
-#define DISPLAYH (480)
+#define DISPLAYH (0.7*480)
 #define DISPLAYW (1.6*640)
-#define FPS (1.0 / 120.0)
+#define FPS (1.0 / 240.0)
+#define MAX_BLINK (120)// cuantos ciclos va a tardar un blink entero. recomendado: mitad del FPS
 
 
 void must_init(bool test, const char *description)
@@ -56,15 +57,22 @@ int main()
     
     int error = 0;
     uint_least16_t mask = 0xFFFF;
+    int blinkCount = 0;
+    bool blinkTrigger = false;
     
     while(1)
     {
-        al_wait_for_event(queue, &event);
-
+       al_wait_for_event(queue, &event);
+       
+       if(blinkCount >= MAX_BLINK)//determino un periodo de tiempo (relativo al FPS) a lo largo del cual pueda
+       {                          //mantener registro para determinar cuando apagar por el blink
+           blinkCount = 0;
+       }
+       blinkCount++;
        switch(event.type)
         {
             case ALLEGRO_EVENT_TIMER:
-                // once again, no game logic. fishy? maybe.
+                
                 redraw = true;
                 break;
 
@@ -126,9 +134,15 @@ int main()
                        error++; 
                     }
                 if(event.keyboard.keycode == ALLEGRO_KEY_B)
-                    if(!bitSet(1,'D'))
+                    switch(blinkTrigger)
                     {
-                       error++; 
+                        case true:
+                            blinkTrigger = false;
+                            break;
+                        case false:
+                            blinkTrigger = true;
+                            break;
+                          
                     }
                 if(event.keyboard.keycode == ALLEGRO_KEY_Q)
                     done = true;
@@ -154,104 +168,107 @@ int main()
             al_draw_text(font, al_map_rgb(255, 255, 255), 15, 55, 0, "Presione 'b' para iniciar/finalizar el titileo de los leds");
             al_draw_text(font, al_map_rgb(255, 255, 255), 15, 65, 0, "Presione 'q' para cerrar el programa");
             
-            
-            if(bitGet(0,'D')==1)
+            if((blinkCount < (MAX_BLINK/2))||(blinkTrigger == false))
             {
-                al_draw_bitmap(on, 100, 100, 0);
-            }else if(bitGet(0,'D')==0)
+                 if(bitGet(0,'D')==1)
+                {
+                    al_draw_bitmap(on, 100, 100, 0);
+                }else if(bitGet(0,'D')==0)
+                {
+                    al_draw_bitmap(off, 100, 100, 0);
+                }else
+                {
+                    error++;
+                }
+            
+                if(bitGet(1,'D')==1)
+                {
+                    al_draw_bitmap(on, 200, 100, 0);
+                }else if(bitGet(1,'D')==0)
+                {
+                    al_draw_bitmap(off, 200, 100, 0);
+                }else
+                {
+                    error++;
+                }
+            
+                if(bitGet(2,'D')==1)
+                {
+                    al_draw_bitmap(on, 300, 100, 0);
+                }else if(bitGet(2,'D')==0)
+                {
+                    al_draw_bitmap(off, 300, 100, 0);
+                }else
+                {
+                    error++;
+                }
+             
+                if(bitGet(3,'D')==1)
+                {
+                    al_draw_bitmap(on, 400, 100, 0);
+                }else if(bitGet(3,'D')==0)
+                {
+                    al_draw_bitmap(off, 400, 100, 0);
+                }else
+                {
+                    error++;
+                }
+             
+                if(bitGet(4,'D')==1)
+                {
+                    al_draw_bitmap(on, 500, 100, 0);
+                }else if(bitGet(4,'D')==0)
+                {
+                    al_draw_bitmap(off, 500, 100, 0);
+                }else
+                {
+                    error++;
+                }
+             
+                if(bitGet(5,'D')==1)
+                {
+                    al_draw_bitmap(on, 600, 100, 0);
+                }else if(bitGet(5,'D')==0)
+                {
+                    al_draw_bitmap(off, 600, 100, 0);
+                }else
+                {
+                    error++;
+                }
+             
+                if(bitGet(6,'D')==1)
+                {
+                    al_draw_bitmap(on, 700, 100, 0);
+                }else if(bitGet(6,'D')==0)
+                {
+                    al_draw_bitmap(off, 700, 100, 0);
+                }else
+                {
+                    error++;
+                }
+             
+                if(bitGet(7,'D')==1)
+                {
+                    al_draw_bitmap(on, 800, 100, 0);
+                }else if(bitGet(7,'D')==0)
+                {
+                    al_draw_bitmap(off, 800, 100, 0);
+                }else
+                {
+                    error++;
+                }
+            }else
             {
                 al_draw_bitmap(off, 100, 100, 0);
-            }else
-            {
-                error++;
-            }
-            
-            if(bitGet(1,'D')==1)
-            {
-                al_draw_bitmap(on, 200, 100, 0);
-            }else if(bitGet(1,'D')==0)
-            {
                 al_draw_bitmap(off, 200, 100, 0);
-            }else
-            {
-                error++;
-            }
-            
-            if(bitGet(2,'D')==1)
-            {
-                al_draw_bitmap(on, 300, 100, 0);
-            }else if(bitGet(2,'D')==0)
-            {
                 al_draw_bitmap(off, 300, 100, 0);
-            }else
-            {
-                error++;
-            }
-             
-            if(bitGet(3,'D')==1)
-            {
-                al_draw_bitmap(on, 400, 100, 0);
-            }else if(bitGet(3,'D')==0)
-            {
                 al_draw_bitmap(off, 400, 100, 0);
-            }else
-            {
-                error++;
-            }
-             
-            if(bitGet(4,'D')==1)
-            {
-                al_draw_bitmap(on, 500, 100, 0);
-            }else if(bitGet(4,'D')==0)
-            {
                 al_draw_bitmap(off, 500, 100, 0);
-            }else
-            {
-                error++;
-            }
-             
-            if(bitGet(5,'D')==1)
-            {
-                al_draw_bitmap(on, 600, 100, 0);
-            }else if(bitGet(5,'D')==0)
-            {
                 al_draw_bitmap(off, 600, 100, 0);
-            }else
-            {
-                error++;
-            }
-             
-            if(bitGet(6,'D')==1)
-            {
-                al_draw_bitmap(on, 700, 100, 0);
-            }else if(bitGet(6,'D')==0)
-            {
                 al_draw_bitmap(off, 700, 100, 0);
-            }else
-            {
-                error++;
-            }
-             
-            if(bitGet(7,'D')==1)
-            {
-                al_draw_bitmap(on, 800, 100, 0);
-            }else if(bitGet(7,'D')==0)
-            {
                 al_draw_bitmap(off, 800, 100, 0);
-            }else
-            {
-                error++;
             }
-            /*
-            al_draw_bitmap(on, 100, 100, 0);
-            al_draw_bitmap(off, 200, 100,0);
-            al_draw_bitmap(on, 300, 100, 0);
-            al_draw_bitmap(off, 400, 100,0);
-            al_draw_bitmap(on, 500, 100, 0);
-            al_draw_bitmap(off, 600, 100,0);
-            al_draw_bitmap(on, 700, 100, 0);
-            al_draw_bitmap(off, 800, 100,0);
-            */
+           
             
             al_flip_display();
 

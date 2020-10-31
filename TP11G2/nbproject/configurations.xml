@@ -9,7 +9,6 @@
                    displayName="Resource Files"
                    projectFiles="true">
       <itemPath>led-on-th.png</itemPath>
-      <itemPath>mysha.png</itemPath>
       <itemPath>off.png</itemPath>
       <itemPath>on.png</itemPath>
     </logicalFolder>
@@ -63,8 +62,6 @@
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="mysha.png" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="off.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="on.png" ex="false" tool="3" flavor2="0">
@@ -97,8 +94,6 @@
       <item path="led-on-th.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="mysha.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="off.png" ex="false" tool="3" flavor2="0">
       </item>
