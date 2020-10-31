@@ -36,14 +36,13 @@ int main()
     must_init(font, "font");
 
     must_init(al_init_image_addon(), "image addon");
-    ALLEGRO_BITMAP* mysha = al_load_bitmap("mysha.png");
-    must_init(mysha, "mysha");
+    
     
      ALLEGRO_BITMAP* on = al_load_bitmap("on.png");
-    must_init(mysha, "on");
+    must_init(on, "on");
     
      ALLEGRO_BITMAP* off = al_load_bitmap("off.png");
-    must_init(mysha, "off");
+    must_init(off, "off");
 
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(disp));
@@ -260,7 +259,7 @@ int main()
         }
     }
 
-    al_destroy_bitmap(mysha);
+ 
     al_destroy_font(font);
     al_destroy_display(disp);
     al_destroy_timer(timer);
